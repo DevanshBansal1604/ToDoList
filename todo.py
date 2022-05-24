@@ -6,5 +6,9 @@ app = Flask(__name__)
 def func():
     return render_template("index.html")
 
+@app.route("/sub")
+def submit():
+    return render_template("sub.html")
+
 if __name__ == "__main__":
     app.run(debug=True)
