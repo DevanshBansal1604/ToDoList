@@ -25,5 +25,26 @@
         })
     </script>
     
+    <div>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col" class="text-center">#</th>
+                <th scope="col" class="d-none d-sm-table-cell">Task Description</th>
+                <th scope="col" class="d-none d-md-table-cell">Time Left</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in todolist %}
+            <tr>
+                <th scope="row">{{todolist.index(task)+1}}</th>
+                <td class="d-none d-sm-table-cell">{{task[0]}}</td>
+                <td class="d-none d-sm-table-cell">{{task[1]}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
