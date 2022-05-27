@@ -6,9 +6,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def func():
-    return render_template("index.html")
+    msg="empty"
 
-@app.route("/sub", methods=['POST'])
+    return render_template("index.html",msgs=msg)
+
+@app.route("/",methods=["POST"])
 def submit():
     if request.method=="POST":
 
@@ -20,24 +22,28 @@ def submit():
 
         print(pres)
 
+        strdead=dead
+
         dead=datetime.strptime(dead, "%H:%M")
 
         diff=dead-pres
 
-        ls.append((desc,diff))
+        ls.append((desc,diff.seconds,strdead))
+
 
         for i in range(1, len(ls)):
-            j = i-1
+            k=i
+            j = k-1
             while j >= 0:
-                if ls[i][1] < ls[j][1]:
-                    ls[i], ls[j] = ls[j], ls[i]
+                if ls[k][1] < ls[j][1]:
+                    ls[k], ls[j] = ls[j], ls[k]
                 
+                k-=1
                 j-=1
         
         print(ls)
         msg="Task Has Been Added Successfully!"
-        
-    return render_template("sub.html",todolist=ls,msgs=msg)
+        return render_template("index.html",todolist=ls,msgs=msg)
 
 if __name__ == "__main__":
     ls=[]
