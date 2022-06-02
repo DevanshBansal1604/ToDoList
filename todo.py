@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 app = Flask(__name__)
 
@@ -19,18 +19,22 @@ def submit():
             desc=request.form['desc']
             dead=request.form['dead']
 
-            pres=str(datetime.now().time())
-            pres=datetime.strptime(pres,"%H:%M:%S.%f")
+            pres=(datetime.now())
+            
 
-            print(pres)
+            Ndead=datetime.strptime(dead, "%Y-%m-%dT%H:%M")
 
-            strdead=dead
+            strdead=Ndead.strftime("%Y-%m-%d %H:%M")
 
-            dead=datetime.strptime(dead, "%H:%M")
+            diff=Ndead-pres
 
-            diff=dead-pres
-
-            ls.append((desc,diff.seconds,strdead))
+            
+            if(diff.total_seconds()<7200):
+                ls.append((desc,diff,strdead,'red'))
+            elif(diff.total_seconds()<21600):
+                ls.append((desc,diff,strdead,'yellow'))
+            else:
+                ls.append((desc,diff,strdead,'white'))
 
 
             for i in range(1, len(ls)):
@@ -43,7 +47,7 @@ def submit():
                     k-=1
                     j-=1
             
-            print(ls)
+            # print(ls)
             msg="Task Has Been Added Successfully!"
             return render_template("index.html",todolist=ls,msgs=msg)
 

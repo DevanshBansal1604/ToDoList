@@ -35,7 +35,8 @@
 
     <form action="/" method="post">
         Enter Your Task: <input type="text" name="desc" id=""><br><br>
-        Enter Your Deadline: <input type="time" name="dead" id=""><br><br>
+        Enter Your Deadline: <input type="datetime-local" name="dead" id=""><br><br>
+        
         <input type="submit" value="Add">
     </form>
 
@@ -52,7 +53,7 @@
             </thead>
             <tbody>
             {% for task in todolist %}
-            <tr>
+            <tr bgcolor={{task[3]}}>
                 <th scope="row">{{todolist.index(task)+1}}</th>
                 <td class="d-none d-sm-table-cell">{{task[0]}}</td>
                 <td class="d-none d-sm-table-cell">{{task[2]}}</td>
