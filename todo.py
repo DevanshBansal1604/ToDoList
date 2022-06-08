@@ -30,11 +30,11 @@ def submit():
 
             
             if(diff.total_seconds()<7200):
-                ls.append((desc,diff,strdead,'red'))
+                ls.append((desc,diff,strdead,'#FA8072'))
             elif(diff.total_seconds()<21600):
-                ls.append((desc,diff,strdead,'yellow'))
+                ls.append((desc,diff,strdead,'#FDDC56'))
             else:
-                ls.append((desc,diff,strdead,'white'))
+                ls.append((desc,diff,strdead,'#EEEEEE'))
 
 
             for i in range(1, len(ls)):
