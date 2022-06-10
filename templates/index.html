@@ -10,7 +10,7 @@
         .navbar{
             background: linear-gradient(to bottom, #D50EFF 0%, #D50EFF 20%, #65007a 20%, #65007a 80% ,#D50EFF 80%, #D50EFF 100% );
             height: 150px;
-            width: 1350px;
+            width: 100%;
         }
         .container{
             text-align: center;  
@@ -21,7 +21,20 @@
             margin-bottom:20px;
             border:1px solid transparent;
             border-radius:4px;
+        }
+        .alert-success{
+            padding:15px;
+            margin-bottom:20px;
+            border:1px solid transparent;
+            border-radius:4px;
             color:black;background-color:#adee95;border-color:#adee95;
+        }    
+        .alert-danger{
+            padding:15px;
+            margin-bottom:20px;
+            border:1px solid transparent;
+            border-radius:4px;
+            color:white;background-color:#FA8072;border-color:#FA8072;
         }    
         .tableEdit{
             margin-left: auto;
@@ -52,7 +65,7 @@
         {% if msgs!="empty" %}
 
 
-        <div class="alert" role="alert">
+        <div class="alert alert-{{msgtg}}" role="alert">
             
             {{ msgs }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="outline: none;">
@@ -91,12 +104,14 @@
                 </thead>
                 <tbody>
                 {% for task in todolist %}
-                <tr style="background-color: {{task[3]}}; font-size: '13px'; font-family: 'Times New Roman', Times, serif; border-radius: '4px';">
-                    <th scope="row"  style="border-radius:4px; border:1px solid transparent;">{{todolist.index(task)+1}}</th>
-                    <td class="d-none d-sm-table-cell" style="border-radius:4px; border:1px solid transparent;">{{task[0]}}</td>
-                    <td class="d-none d-sm-table-cell" style="border-radius:4px; border:1px solid transparent;">{{task[2]}}</td>
-                    <td class="d-none d-sm-table-cell" style="border-radius:4px; border:1px solid transparent;"><input type="checkbox" class="save-cb-state" name={{task[4]}} value="Done"></td>
-                </tr>
+                    {% if task[5]==1 %}
+                        <tr style="background-color: {{task[3]}}; font-size: '13px'; font-family: 'Times New Roman', Times, serif; border-radius: '4px';">
+                            <th scope="row"  style="border-radius:4px; border:1px solid transparent;">{{todolist.index(task)+1}}</th>
+                            <td class="d-none d-sm-table-cell" style="border-radius:4px; border:1px solid transparent;">{{task[0]}}</td>
+                            <td class="d-none d-sm-table-cell" style="border-radius:4px; border:1px solid transparent;">{{task[2]}}</td>
+                            <td class="d-none d-sm-table-cell" style="border-radius:4px; border:1px solid transparent;"><input type="checkbox" class="save-cb-state" name={{task[4]}} value="Done"></td>
+                        </tr>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

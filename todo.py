@@ -31,14 +31,18 @@ def submit():
             new_desc = desc[::]
             new_desc.replace(" ", "")
 
-            print("ye hai new desc: ", new_desc)
+            # print("ye hai new desc: ", new_desc)
+
+            flag=0
+            if((Ndead-datetime.now()).total_seconds()<0):
+                flag=1
 
             if(diff.total_seconds()<7200):
-                ls.append([desc,diff,strdead,'#FA8072', new_desc])
+                ls.append([desc,diff,strdead,'#FA8072', new_desc,1])
             elif(diff.total_seconds()<21600):
-                ls.append([desc,diff,strdead,'#FDDC56', new_desc])
+                ls.append([desc,diff,strdead,'#FDDC56', new_desc,1])
             else:
-                ls.append([desc,diff,strdead,'#f4c1fe', new_desc])
+                ls.append([desc,diff,strdead,'#f4c1fe', new_desc,1])
 
             
 
@@ -52,24 +56,33 @@ def submit():
                     k-=1
                     j-=1
             
-            # print(ls)
-            now = datetime.now()
+            # now = datetime.now()
         
             for i in ls:
                 timeobj = datetime.strptime(i[2], "%Y-%m-%d %H:%M")
-                diff2 = timeobj-now
-
+                diff2 = timeobj-datetime.now()
                 if diff2.total_seconds()<7200:
                     i[3] = '#FA8072'
-
                 elif diff2.total_seconds()<21600:
                     i[3] = '#FDDC56'
-
                 else:
                     i[3] = '#f4c1fe'
 
-            msg="Task Has Been Added Successfully!"
-            return render_template("index.html",todolist=ls,msgs=msg)
+            for i in ls:
+                timeobj = datetime.strptime(i[2], "%Y-%m-%d %H:%M")
+                diff2 = timeobj-datetime.now()
+                if(diff2.total_seconds()<0):
+                    i[5]=0
+    
+
+            if(flag==0):
+                msg="Task Has Been Added Successfully!"
+                msgtag="success"
+            else:
+                msg="Please Enter A Correct Deadline!"
+                msgtag="danger"
+            
+            return render_template("index.html",todolist=ls,msgs=msg,msgtg=msgtag)
 
 
         # else:
