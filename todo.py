@@ -19,7 +19,7 @@ def submit():
             desc=request.form['desc']
             dead=request.form['dead']
 
-            pres=(datetime.now())
+            pres=datetime.strptime("2022-01-01 00:00", "%Y-%m-%d %H:%M")
             
 
             Ndead=datetime.strptime(dead, "%Y-%m-%dT%H:%M")
@@ -28,13 +28,19 @@ def submit():
 
             diff=Ndead-pres
 
-            if(diff.total_seconds()<7200):
-                ls.append((desc,diff,strdead,'#FA8072',len(ls)+1))
-            elif(diff.total_seconds()<21600):
-                ls.append((desc,diff,strdead,'#FDDC56',len(ls)+1))
-            else:
-                ls.append((desc,diff,strdead,'#EEEEEE',len(ls)+1))
+            new_desc = desc[::]
+            new_desc.replace(" ", "")
 
+            print("ye hai new desc: ", new_desc)
+
+            if(diff.total_seconds()<7200):
+                ls.append([desc,diff,strdead,'#FA8072', new_desc])
+            elif(diff.total_seconds()<21600):
+                ls.append([desc,diff,strdead,'#FDDC56', new_desc])
+            else:
+                ls.append([desc,diff,strdead,'#EEEEEE', new_desc])
+
+            
 
             for i in range(1, len(ls)):
                 k=i
@@ -47,14 +53,29 @@ def submit():
                     j-=1
             
             # print(ls)
+            now = datetime.now()
+        
+            for i in ls:
+                timeobj = datetime.strptime(i[2], "%Y-%m-%d %H:%M")
+                diff2 = timeobj-now
+
+                if diff2.total_seconds()<7200:
+                    i[3] = '#FA8072'
+
+                elif diff2.total_seconds()<21600:
+                    i[3] = '#FDDC56'
+
+                else:
+                    i[3] = '#EEEEEE'
+
             msg="Task Has Been Added Successfully!"
             return render_template("index.html",todolist=ls,msgs=msg)
 
 
-        else:
-            print("Task",request.form['Done'])
-            msg="Task Has Been Deleted Successfully!"
-            return render_template("index.html",todolist=ls,msgs=msg)
+        # else:
+        #     print("Task",request.form['Done'])
+        #     msg="Task Has Been Deleted Successfully!"
+        #     return render_template("index.html",todolist=ls,msgs=msg, c=count)
             
 
         # pres=str(datetime.now().time())
@@ -87,4 +108,5 @@ def submit():
 
 if __name__ == "__main__":
     ls=[]
+    
     app.run(debug=True)
