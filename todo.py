@@ -28,13 +28,12 @@ def submit():
 
             diff=Ndead-pres
 
-            
             if(diff.total_seconds()<7200):
-                ls.append((desc,diff,strdead,'#FA8072'))
+                ls.append((desc,diff,strdead,'#FA8072',len(ls)+1))
             elif(diff.total_seconds()<21600):
-                ls.append((desc,diff,strdead,'#FDDC56'))
+                ls.append((desc,diff,strdead,'#FDDC56',len(ls)+1))
             else:
-                ls.append((desc,diff,strdead,'#EEEEEE'))
+                ls.append((desc,diff,strdead,'#EEEEEE',len(ls)+1))
 
 
             for i in range(1, len(ls)):
