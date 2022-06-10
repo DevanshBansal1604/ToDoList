@@ -38,7 +38,7 @@ def submit():
             elif(diff.total_seconds()<21600):
                 ls.append([desc,diff,strdead,'#FDDC56', new_desc])
             else:
-                ls.append([desc,diff,strdead,'#EEEEEE', new_desc])
+                ls.append([desc,diff,strdead,'#f4c1fe', new_desc])
 
             
 
@@ -66,7 +66,7 @@ def submit():
                     i[3] = '#FDDC56'
 
                 else:
-                    i[3] = '#EEEEEE'
+                    i[3] = '#f4c1fe'
 
             msg="Task Has Been Added Successfully!"
             return render_template("index.html",todolist=ls,msgs=msg)
