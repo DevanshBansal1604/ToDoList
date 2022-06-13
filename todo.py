@@ -28,8 +28,8 @@ def submit():
 
             diff=Ndead-pres
 
-            new_desc = desc[::]
-            new_desc.replace(" ", "")
+            # new_desc = desc[::]
+            # new_desc.replace(" ", "")
 
             # print("ye hai new desc: ", new_desc)
 
@@ -38,11 +38,11 @@ def submit():
                 flag=1
 
             if(diff.total_seconds()<7200):
-                ls.append([desc,diff,strdead,'#FA8072', new_desc,1])
+                ls.append([desc,diff,strdead,'#FA8072', str(len(ls)),1])
             elif(diff.total_seconds()<21600):
-                ls.append([desc,diff,strdead,'#FDDC56', new_desc,1])
+                ls.append([desc,diff,strdead,'#FDDC56', str(len(ls)),1])
             else:
-                ls.append([desc,diff,strdead,'#f4c1fe', new_desc,1])
+                ls.append([desc,diff,strdead,'#f4c1fe', str(len(ls)),1])
 
             
 
@@ -67,14 +67,18 @@ def submit():
                     i[3] = '#FDDC56'
                 else:
                     i[3] = '#f4c1fe'
+            
+            templs = []
 
             for i in ls:
                 timeobj = datetime.strptime(i[2], "%Y-%m-%d %H:%M")
                 diff2 = timeobj-datetime.now()
                 if(diff2.total_seconds()<0):
                     i[5]=0
+                else:
+                    templs.append(i)
     
-
+            
             if(flag==0):
                 msg="Task Has Been Added Successfully!"
                 msgtag="success"
@@ -82,7 +86,7 @@ def submit():
                 msg="Please Enter A Correct Deadline!"
                 msgtag="danger"
             
-            return render_template("index.html",todolist=ls,msgs=msg,msgtg=msgtag)
+            return render_template("index.html",todolist=templs,msgs=msg,msgtg=msgtag)
 
 
         # else:
